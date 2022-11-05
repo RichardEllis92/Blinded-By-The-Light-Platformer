@@ -16,7 +16,6 @@ public class LevelManager : MonoBehaviour
         instance = this;
     }
 
-
     // Update is called once per frame
     void Update()
     {
@@ -26,7 +25,7 @@ public class LevelManager : MonoBehaviour
     public void GetFood(int amount)
     {
         currentFood += amount;
-
+        AudioManager.instance.PlaySFX(3);
         UIController.instance.foodText.text = currentFood.ToString();
     }
 

@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bba8c2f7cd2d945bdada9167a4059c, type: 3}
+  m_Name: 1
+  m_EditorClassIdentifier: 
+  dialogue:
+  - 'This could be a problem...
+
+    How can we get over there???
+
+    My jump isn''t
+    long enough!'
+  - 'Wait...
+
+    Maybe I can hack the game to our advantage.'
+  - '...
+
+    ...
+
+    ...'
+  - 'Try pressing ` and typing double_jump
+
+    If for some reason you can''t remember
+    2 simple words, type in help.'
+  responses:
+  - responseText: You can hack the game?
+    dialogueObject: {fileID: 11400000, guid: 21bf12a8c8a20ed4194ae0038212eec3, type: 2}
+  - responseText: I'll try
+    dialogueObject: {fileID: 11400000, guid: d3c3f2af24e8b3f47bb51d4d97101eac, type: 2}

@@ -8,6 +8,7 @@ public class DialogueUI : MonoBehaviour
 
     [SerializeField] private GameObject dialogueBox;
     [SerializeField] private TMP_Text textLabel;
+    [SerializeField] private GameObject continueText;
 
     public bool isOpen { get; private set; }
 
@@ -37,6 +38,8 @@ public class DialogueUI : MonoBehaviour
     {
         for (int i = 0; i < dialogueObject.Dialogue.Length; i++)
         {
+            continueText.SetActive(false);
+
             string dialogue = dialogueObject.Dialogue[i];
 
             yield return RunTypingEffect(dialogue);
@@ -45,7 +48,8 @@ public class DialogueUI : MonoBehaviour
 
             if (i == dialogueObject.Dialogue.Length - 1 && dialogueObject.HasResponses) break;
 
-            yield return null;
+            yield return new WaitForSeconds(0.3f);
+            continueText.SetActive(true);
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.E));
         }
 
@@ -56,7 +60,7 @@ public class DialogueUI : MonoBehaviour
         else
         {
             CloseDialogueBox();
-        }   
+        }
     }
 
     private IEnumerator RunTypingEffect(string dialogue)
@@ -78,6 +82,7 @@ public class DialogueUI : MonoBehaviour
 
     public void CloseDialogueBox()
     {
+        continueText.SetActive(false);
         isOpen = false;
         dialogueBox.SetActive(false);
         textLabel.text = string.Empty;

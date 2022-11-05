@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     float yScale = 6.66f;
     bool grounded;
     float gravityScaleAtStart;
+    public bool fading;
 
     [SerializeField]
     private DialogueUI dialogueUI;
@@ -48,6 +49,9 @@ public class PlayerController : MonoBehaviour
     private float shotCounter;
     private static Vector2 fireBallPosition;
 
+    public GameObject doubleJumpUnlockedPopUp;
+    public GameObject doubleJumpAlreadyUnlockedPopUp;
+    private bool doubleJumpAlreadyUnlocked;
     void Start()
     {
         instance = this;
@@ -56,6 +60,7 @@ public class PlayerController : MonoBehaviour
         myCapsuleCollider = GetComponent<CapsuleCollider2D>();
         gravityScaleAtStart = myRigidbody.gravityScale;
         physgravity = Physics2D.gravity;
+        myAnimator.Play("Player_Idle");
     }
 
     
@@ -86,7 +91,7 @@ public class PlayerController : MonoBehaviour
 
     void OnJump(InputValue value)
     {
-        if (dialogueUI.isOpen || DebugController.instance.showConsole){ return; }
+        if (dialogueUI.isOpen || DebugController.instance.showConsole || fading) { return; }
 
         if (IsGrounded() && !value.isPressed)
         {
@@ -115,7 +120,7 @@ public class PlayerController : MonoBehaviour
 
     void Run()
     {
-        if (dialogueUI.isOpen || DebugController.instance.showConsole) return;
+        if (dialogueUI.isOpen || DebugController.instance.showConsole || fading) return;
 
         Vector2 playerVelocity = new Vector2 (moveInput.x * movementSpeed, myRigidbody.velocity.y);
         myRigidbody.velocity = playerVelocity;
@@ -136,7 +141,7 @@ public class PlayerController : MonoBehaviour
     {
         bool playerHasHorizontalSpeed = Mathf.Abs(myRigidbody.velocity.x) > Mathf.Epsilon;
 
-        if (dialogueUI.isOpen) return;
+        if (dialogueUI.isOpen || fading || DebugController.instance.showConsole) return;
         if (playerHasHorizontalSpeed)
         {
             transform.localScale = new Vector2((Mathf.Sign(myRigidbody.velocity.x)) / xScale, 1f / yScale);
@@ -146,22 +151,38 @@ public class PlayerController : MonoBehaviour
 
     void StopMoving()
     {
-        if (dialogueUI.isOpen || DebugController.instance.showConsole)
+        if (dialogueUI.isOpen || DebugController.instance.showConsole || fading)
         {
             myRigidbody.velocity = Vector2.zero;
-            myAnimator.gameObject.GetComponent<Animator>().enabled = false;
+            myAnimator.Play("Player_Idle");
         } 
-        else if (!dialogueUI.isOpen && !DebugController.instance.showConsole)
-        {
-            myAnimator.gameObject.GetComponent<Animator>().enabled = true;
-        }
     }
 
     public void UnlockDoubleJump()
     {
         doubleJumpUnlocked = true;
+        StartCoroutine(UnlockDoubleJumpPopUp());
     }
 
+    IEnumerator UnlockDoubleJumpPopUp()
+    {
+        if (!doubleJumpAlreadyUnlocked)
+        {
+            doubleJumpUnlockedPopUp.SetActive(true);
+            AudioManager.instance.PlaySFX(1);
+            yield return new WaitForSeconds(2f);
+            doubleJumpUnlockedPopUp.SetActive(false);
+            doubleJumpAlreadyUnlocked = true;
+        }
+        else
+        {
+            doubleJumpAlreadyUnlockedPopUp.SetActive(true);
+            AudioManager.instance.PlaySFX(2);
+            yield return new WaitForSeconds(2f);
+            doubleJumpAlreadyUnlockedPopUp.SetActive(false);
+        }
+        
+    }
     public void UnlockFireBall()
     {
         fireBallUnlocked = true;
@@ -226,7 +247,7 @@ public class PlayerController : MonoBehaviour
 
     void ClimbLadder()
     {
-        if (!myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ladder")) || dialogueUI.isOpen || DebugController.instance.showConsole) 
+        if (!myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ladder")) || dialogueUI.isOpen || DebugController.instance.showConsole || fading) 
         {
             myRigidbody.gravityScale = gravityScaleAtStart;
             Physics2D.gravity = physgravity;
@@ -272,28 +293,14 @@ public class PlayerController : MonoBehaviour
             myAnimator.speed = 0;
             myRigidbody.velocity = new Vector2(0, 0);
         }
-        
+    }
 
-/*
-        if(!myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ground")) && myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ladder")))
-        {
-            if (Input.GetKey(KeyCode.W))
-            {
-                Vector2 climbVelocity = new Vector2(myRigidbody.velocity.x, moveInput.y * climbSpeed);
-                myRigidbody.velocity = climbVelocity;
-                Debug.Log("Going Up");
-            }
-            else if (Input.GetKey(KeyCode.S))
-            {
-                Vector2 climbVelocity = new Vector2(-myRigidbody.velocity.x, moveInput.y * climbSpeed);
-                myRigidbody.velocity = climbVelocity;
-                Debug.Log("Going Down");
-            }
-            else
-            {
-                //myRigidbody.constraints = RigidbodyConstraints2D.FreezePosition;
-            }
-        }
-*/
+    public void ResetClimbing()
+    {
+        myRigidbody.gravityScale = gravityScaleAtStart;
+        Physics2D.gravity = physgravity;
+        myAnimator.SetBool("isClimbing", false);
+        myAnimator.speed = 1;
+        return;
     }
 }

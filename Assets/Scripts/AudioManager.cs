@@ -6,28 +6,30 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
 
-    //public AudioSource levelMusic, gameOverMusic, winMusic, choiceMusic, secretEndingMusic;
-
     public AudioSource[] sfx;
+    public AudioSource music;
+
+    [SerializeField]
+    private DialogueUI dialogueUI;
+
+    [SerializeField]
+    float lowerMusicVolume = 0.1f;
+
+    [SerializeField]
+    float raiseMusicVolume = 0.5f;
 
     private void Awake()
     {
         instance = this;
     }
 
-    /*
-    public void PlayGameOver()
+    private void Update()
     {
-        levelMusic.Stop();
-        gameOverMusic.Play();
+        LowerMusicVolume();
+        RaiseMusicVolume();
+        PlayMusic();
     }
 
-    public void PlayLevelWin()
-    {
-        levelMusic.Stop();
-        winMusic.Play();
-    }
-    */
     public void PlaySFX(int sfxToPlay)
     {
         sfx[sfxToPlay].Stop();
@@ -38,17 +40,24 @@ public class AudioManager : MonoBehaviour
     {
         sfx[sfxToPlay].Stop();
     }
-    /*
-    public void PlayChoiceMusic()
-    {
-        levelMusic.Stop();
-        choiceMusic.Play();
-    }
 
-    public void PlaySecretEndingMusic()
+    void LowerMusicVolume()
     {
-        choiceMusic.Stop();
-        secretEndingMusic.Play();
+        if (dialogueUI.isOpen == true)
+        {
+            music.volume = lowerMusicVolume;
+        }
     }
-    */
+    void RaiseMusicVolume()
+    {
+        if (dialogueUI.isOpen == false)
+        {
+            music.volume = raiseMusicVolume;
+        }
+    }
+    public void PlayMusic()
+    {
+        if (music.isPlaying) return;
+        music.Play();
+    }
 }

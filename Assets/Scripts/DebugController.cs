@@ -22,6 +22,8 @@ public class DebugController : MonoBehaviour
     Vector2 scroll;
     GUI style;
 
+    public GameObject invalidCheat;
+
     public void OnToggleDebug(InputValue value)
     {
         showConsole = !showConsole;
@@ -57,6 +59,7 @@ public class DebugController : MonoBehaviour
         commandList = new List<object>
         {
             HELP,
+            FIREBALL,
         };   
     }
 
@@ -123,8 +126,19 @@ public class DebugController : MonoBehaviour
                 {
                     (commandList[i] as DebugCommand).Invoke();
                 }
+                else
+                {
+                    StartCoroutine(InvalidCheat());
+                }
             }
         }
+    }
+
+    IEnumerator InvalidCheat()
+    {
+        invalidCheat.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        invalidCheat.SetActive(false);
     }
 
     public void AddToListDoubleJump()
@@ -135,5 +149,5 @@ public class DebugController : MonoBehaviour
     public void AddToListFireBall()
     {
         commandList.Add(FIREBALL);
-    }
+    } 
 }
