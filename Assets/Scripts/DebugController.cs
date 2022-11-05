@@ -59,7 +59,7 @@ public class DebugController : MonoBehaviour
         commandList = new List<object>
         {
             HELP,
-            FIREBALL,
+            DOUBLE_JUMP,
         };   
     }
 

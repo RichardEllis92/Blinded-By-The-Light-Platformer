@@ -26,6 +26,7 @@ public class EnemyMovement : MonoBehaviour
         }
         if (collision.gameObject.tag == "Fireball")
         {
+            AudioManager.instance.PlaySFX(5);
             Destroy(this.gameObject);
         }
     }

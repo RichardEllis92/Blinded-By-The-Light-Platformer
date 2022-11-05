@@ -22,6 +22,11 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateFoodText();
+    }
+
+    public void UpdateFoodText()
+    {
+        foodText.text = LevelManager.instance.currentFood.ToString();
     }
 }

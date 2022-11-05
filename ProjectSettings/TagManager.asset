@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - EnemyBounce
   - Fireball
+  - Fade
   layers:
   - Default
   - TransparentFX

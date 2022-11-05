@@ -5,11 +5,11 @@ using UnityEngine;
 public class TeleportPlayer : MonoBehaviour
 {
     public Transform teleportTarget;
-    public GameObject thePlayer;
     float waitTime = 0.17f;
     public Animator AnimRefObj;
     public static TeleportPlayer instance;
     public bool fading;
+    public GameObject fadeUI;
 
     private void Start()
     {
@@ -19,6 +19,7 @@ public class TeleportPlayer : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            other.transform.position = teleportTarget.transform.position;
             StartCoroutine(WaitForFadeIn());
             fading = false;
         }
@@ -26,10 +27,12 @@ public class TeleportPlayer : MonoBehaviour
 
     IEnumerator WaitForFadeIn()
     {
-        thePlayer.transform.position = teleportTarget.transform.position;
+        fadeUI.SetActive(true);
         AnimRefObj.Play("FadeInAnim");
+        AudioManager.instance.PlaySFX(6);
         PlayerController.instance.fading = true;
         yield return new WaitForSeconds(waitTime);
         PlayerController.instance.fading = false;
+        fadeUI.SetActive(false);
     }
 }

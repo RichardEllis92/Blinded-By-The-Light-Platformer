@@ -26,7 +26,8 @@ public class LevelManager : MonoBehaviour
     {
         currentFood += amount;
         AudioManager.instance.PlaySFX(3);
-        UIController.instance.foodText.text = currentFood.ToString();
+        //UIController.instance.foodText.text = currentFood.ToString();
+        //UIController.instance.UpdateFoodText();
     }
 
     public void EnableFoodUI()

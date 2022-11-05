@@ -106,6 +106,7 @@ public class PlayerController : MonoBehaviour
                 {
                     myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, doubleJump ? doubleJumpPower : jumpSpeed);
                     doubleJump = !doubleJump;
+                    AudioManager.instance.PlaySFX(7);
                 }
             }
             else
@@ -113,6 +114,7 @@ public class PlayerController : MonoBehaviour
                 if (value.isPressed && IsGrounded())
                 {
                     myRigidbody.velocity += new Vector2(0f, jumpSpeed);
+                    AudioManager.instance.PlaySFX(7);
                 }
             }
         }
@@ -231,6 +233,7 @@ public class PlayerController : MonoBehaviour
                 {
                     fireBallPosition = transform.position;
                     GameObject newFireBall = Instantiate(fireBall, fireBallPosition, Quaternion.LookRotation(transform.localScale));
+                    AudioManager.instance.PlaySFX(4);
                     if (transform.localScale.x > 0)
                     {
                         newFireBall.transform.right = transform.right.normalized;

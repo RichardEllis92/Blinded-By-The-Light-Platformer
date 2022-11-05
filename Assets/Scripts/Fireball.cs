@@ -13,4 +13,12 @@ public class Fireball : MonoBehaviour
     {
         theRB.velocity = transform.right * speed;
     }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }
