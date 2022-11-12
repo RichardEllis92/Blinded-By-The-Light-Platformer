@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bba8c2f7cd2d945bdada9167a4059c, type: 3}
+  m_Name: 1
+  m_EditorClassIdentifier: 
+  dialogue:
+  - We're making good progress, well done!
+  - I think I found a way to deal with these Demons.
+  - 'Open up the console with ` and type in Fireball.
+
+    Then I think it''s F
+    to shoot.'
+  - I hope breathing fire doesn't hurt me but I guess we'll find out.
+  - 'I just wanted to say thank you for helping me.
+
+    Let''s get out of here!'
+  responses:
+  - responseText: No problem!
+    dialogueObject: {fileID: 0}
+  - responseText: I love this game
+    dialogueObject: {fileID: 0}
+  - responseText: Luci is great
+    dialogueObject: {fileID: 0}

@@ -21,3 +21,4 @@ MonoBehaviour:
     What would be the
     fun in that?'
   responses: []
+  isEndDialogue: 1

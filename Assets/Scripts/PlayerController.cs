@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
 
     //public Rigidbody2D theRB;
 
+    [SerializeField]
     private bool doubleJump;
 
     Vector2 moveInput;
@@ -51,7 +52,10 @@ public class PlayerController : MonoBehaviour
 
     public GameObject doubleJumpUnlockedPopUp;
     public GameObject doubleJumpAlreadyUnlockedPopUp;
+    public GameObject fireBallUnlockedPopUp;
+    public GameObject fireBallAlreadyUnlockedPopUp;
     private bool doubleJumpAlreadyUnlocked;
+    private bool fireBallAlreadyUnlocked;
     void Start()
     {
         instance = this;
@@ -73,6 +77,8 @@ public class PlayerController : MonoBehaviour
         ShootFireball();
         JumpAnimation();
         ClimbLadder();
+        ResetDoubleJump();
+        IsGrounded();
 
         if (Input.GetKeyDown(KeyCode.E) && dialogueUI.isOpen == false)
         {
@@ -117,6 +123,14 @@ public class PlayerController : MonoBehaviour
                     AudioManager.instance.PlaySFX(7);
                 }
             }
+        }
+    }
+
+    public void ResetDoubleJump()
+    {
+        if (IsGrounded())
+        {
+            doubleJump = true;
         }
     }
 
@@ -188,6 +202,27 @@ public class PlayerController : MonoBehaviour
     public void UnlockFireBall()
     {
         fireBallUnlocked = true;
+        StartCoroutine(UnlockFireBallPopUp());
+    }
+
+    IEnumerator UnlockFireBallPopUp()
+    {
+        if (!fireBallAlreadyUnlocked)
+        {
+            fireBallUnlockedPopUp.SetActive(true);
+            AudioManager.instance.PlaySFX(1);
+            yield return new WaitForSeconds(2f);
+            fireBallUnlockedPopUp.SetActive(false);
+            fireBallAlreadyUnlocked = true;
+        }
+        else
+        {
+            fireBallAlreadyUnlockedPopUp.SetActive(true);
+            AudioManager.instance.PlaySFX(2);
+            yield return new WaitForSeconds(2f);
+            fireBallAlreadyUnlockedPopUp.SetActive(false);
+        }
+
     }
 
     public bool IsGrounded()
@@ -204,7 +239,7 @@ public class PlayerController : MonoBehaviour
 
     void PlayerLimits()
     {
-        transform.position = new Vector2(Mathf.Clamp(transform.position.x, -18.5f, 100f), transform.position.y);
+        transform.position = new Vector2(Mathf.Clamp(transform.position.x, -18.5f, 200f), transform.position.y);
     }
 
     void JumpAnimation()

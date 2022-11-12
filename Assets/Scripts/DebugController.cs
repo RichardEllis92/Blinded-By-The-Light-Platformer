@@ -26,7 +26,10 @@ public class DebugController : MonoBehaviour
 
     public void OnToggleDebug(InputValue value)
     {
-        showConsole = !showConsole;
+        if (PlayerController.instance.IsGrounded())
+        {
+            showConsole = !showConsole;
+        }
     }
 
     public void OnEnter(InputValue value)
@@ -59,8 +62,7 @@ public class DebugController : MonoBehaviour
         commandList = new List<object>
         {
             HELP,
-            DOUBLE_JUMP,
-        };   
+        };
     }
 
     private void Start()
@@ -70,7 +72,7 @@ public class DebugController : MonoBehaviour
 
     private void OnGUI()
     {
-        if(!showConsole) { displayHelp = false; return; }
+        if (!showConsole || !PlayerController.instance.IsGrounded()) { displayHelp = false; return; }
 
         float y = 0f;
         if (displayHelp)
@@ -81,7 +83,7 @@ public class DebugController : MonoBehaviour
             {
                 GUI.Box(new Rect(0, y, Screen.width, 100), "");
 
-                Rect viewport = new Rect(0, 0, Screen.width - 30, 20 * commandList.Count);
+                Rect viewport = new Rect(0, 0, Screen.width - 30, 40 * commandList.Count);
 
                 scroll = GUI.BeginScrollView(new Rect(0, y + 5f, Screen.width, 90), scroll, viewport);
 

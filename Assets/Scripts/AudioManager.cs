@@ -23,11 +23,14 @@ public class AudioManager : MonoBehaviour
         instance = this;
     }
 
+    private void Start()
+    {
+        PlayMusic();
+    }
     private void Update()
     {
         LowerMusicVolume();
         RaiseMusicVolume();
-        PlayMusic();
     }
 
     public void PlaySFX(int sfxToPlay)
@@ -59,5 +62,10 @@ public class AudioManager : MonoBehaviour
     {
         if (music.isPlaying) return;
         music.Play();
+    }
+
+    public void StopMusic()
+    {
+        music.Stop();
     }
 }

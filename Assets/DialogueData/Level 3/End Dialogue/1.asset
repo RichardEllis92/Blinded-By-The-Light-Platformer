@@ -10,16 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9bba8c2f7cd2d945bdada9167a4059c, type: 3}
-  m_Name: 4-No
+  m_Name: 1
   m_EditorClassIdentifier: 
   dialogue:
-  - Please!!!!
-  - 'I literally can''t move!
+  - 'You''ve really helped me so I need to be honest...
 
-'
-  - No one deserves this!
-  responses:
-  - responseText: I'll help
-    dialogueObject: {fileID: 11400000, guid: 2220c9cc40119ac4f9588fed67107890, type: 2}
-  - responseText: I'll help
-    dialogueObject: {fileID: 11400000, guid: 2220c9cc40119ac4f9588fed67107890, type: 2}
+    My full name...
+
+    It''s
+    Lucif'
+  responses: []

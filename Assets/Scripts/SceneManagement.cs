@@ -41,4 +41,14 @@ public class SceneManagement : MonoBehaviour
     {
         SceneManager.LoadScene(levelOne);
     }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("TitleScreen");
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }

@@ -14,6 +14,9 @@ public class DialogueUI : MonoBehaviour
 
     private ResponseHandler responseHandler;
     private TypewriterEffect typewriterEffect;
+
+    public GameObject endGameUI;
+    public GameObject music;
     private void Start()
     {
         instance = this;
@@ -49,13 +52,30 @@ public class DialogueUI : MonoBehaviour
             if (i == dialogueObject.Dialogue.Length - 1 && dialogueObject.HasResponses) break;
 
             yield return new WaitForSeconds(0.3f);
-            continueText.SetActive(true);
-            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.E));
+            
+            if ((DialogueTriggerEndGame.instance.endGame))
+            {
+                AudioManager.instance.PlaySFX(8);
+                AudioManager.instance.StopMusic();
+                yield return new WaitForSeconds(0.1f);
+                endGameUI.SetActive(true); 
+            }
+            else
+            {
+                continueText.SetActive(true);
+                yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.E));
+            }
+            
+            
         }
 
         if (dialogueObject.HasResponses)
         {
             responseHandler.ShowResponses(dialogueObject.Responses);
+        }
+        else if (DialogueTriggerEndGame.instance.endGame)
+        {
+            endGameUI.SetActive(true);
         }
         else
         {

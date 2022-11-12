@@ -14,11 +14,13 @@ public class Fireball : MonoBehaviour
         theRB.velocity = transform.right * speed;
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.CompareTag("EnemyBody"))
         {
-            Destroy(this.gameObject);
+            Debug.Log("Fireball Destroyed!");
+            Destroy(gameObject);
         }
     }
+
 }

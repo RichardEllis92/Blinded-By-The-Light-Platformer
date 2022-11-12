@@ -24,15 +24,15 @@ public class EnemyMovement : MonoBehaviour
             moveSpeed = -moveSpeed;
             FlipEnemyFacing();
         }
-        if (collision.gameObject.tag == "Fireball")
-        {
-            AudioManager.instance.PlaySFX(5);
-            Destroy(this.gameObject);
-        }
     }
 
    void FlipEnemyFacing()
     {
         transform.localScale = new Vector2(-(Mathf.Sign(myRigidBody.velocity.x)) * 2f, 1f * 2f);
+    }
+
+   public void DestroyEnemy()
+    {
+        Destroy(gameObject);
     }
 }
