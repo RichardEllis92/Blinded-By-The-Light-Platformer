@@ -23,4 +23,9 @@ public class Fireball : MonoBehaviour
         }
     }
 
+    void OnBecameInvisible()
+    {
+        Destroy(gameObject);
+    }
+
 }
